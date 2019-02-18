@@ -11,8 +11,8 @@
 
 **Paper**
 
-[Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions](https://arxiv.org/pdf/1901.10501.pdf) 
-Hao Wang, Berk Ustun, and Flavio P. Calmon
+[Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions](https://arxiv.org/pdf/1901.10501.pdf)    
+    Hao Wang, Berk Ustun, and Flavio P. Calmon
 
  ```
 @article{wang2019ctf,
