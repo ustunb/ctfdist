@@ -1,12 +1,12 @@
 # ctfdist
 
-`ctfdist` is a package to repair classification models with performance disparities between demographic subgroups.
+`ctfdist` is a package to repair classification models with disparate impact.
 
 Highlights:
 
 - works with any binary classification model
-- repair does not require training a new classification model
-- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equal Opportunity)
+- does not require training a new classification model
+- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equal Opportunity between groups)
 - can repair performance disparities for multiple subgroups
 
 ### Paper
