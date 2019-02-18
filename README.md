@@ -6,7 +6,7 @@ Highlights:
 
 - works with any binary classification model
 - does not require training a new classification model
-- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equal Opportunity between groups)
+- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equalized Odds etc.)
 - can repair performance disparities for multiple subgroups
 
 ### Paper
