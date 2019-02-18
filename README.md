@@ -2,14 +2,14 @@
 
 `ctfdist` is a package to repair classification models with disparate impact.
 
-*Highlights*
+**Highlights**
 
 - works with any binary classification model
 - does not require training a new classification model
 - can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equalized Odds etc.)
 - can repair performance disparities for multiple subgroups
 
-*Paper*
+**Paper**
 
 [Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions](https://arxiv.org/pdf/1901.10501.pdf) 
 Hao Wang, Berk Ustun, and Flavio P. Calmon
@@ -28,9 +28,7 @@ archivePrefix = {arXiv},
 }
 ```
 
-----
-
-## Requirements
+## Installation
 
 The minimum requirements are:
 
