@@ -75,11 +75,11 @@ def df_to_XYS(df, outcome_column_name = None, group_column_name = None, minority
         Y = df.iloc[:, 0].values
 
     if group_column_name is not None:
-        G = df[group_column_name]
+        G = df[group_column_name].values
     else:
-        G = df.iloc[:, 1]
+        G = df.iloc[:, 1].values
 
-    S = np.isin(G.values, minority_group, invert = True)
+    S = np.isin(G, minority_group, invert = True)
     X = np.array(df.iloc[:, 2:].values, dtype = np.float)
     Y = np.array(Y, dtype = np.float)
     return X, Y, S
@@ -117,12 +117,11 @@ def get_all_performance_metrics(df_dict, **kwargs):
     return pd.concat(all_stats_df)
 
 
-def get_performance_metrics(df, predict_yhat, predict_prob, pp = None, outcome_column_name = None, group_column_name = None, minority_group = None, data_type = 'test'):
+def get_performance_metrics(df, predict_yhat, predict_prob, pp = None, outcome_column_name = None, group_column_name = None, minority_group = 0, data_type = 'test'):
 
     assert isinstance(df, pd.DataFrame)
     assert callable(predict_yhat)
     assert callable(predict_prob)
-
     X, Y, S = df_to_XYS(df, outcome_column_name = outcome_column_name, group_column_name = group_column_name, minority_group = minority_group)
     X_ctf = np.array(X)
     min_idx = S == 0
@@ -203,6 +202,10 @@ def split_by_group(df, outcome_column_name = None, group_column_name = None, min
     n_groups = group_counts.size
     group_labels = group_counts.index.tolist()
 
+    if minority_group not in df[group_column_name].values:
+        minority_group = int(minority_group)
+
+    assert minority_group is not None
     assert minority_group in df[group_column_name].values
     group_labels.remove(minority_group)
     if n_groups == 2:

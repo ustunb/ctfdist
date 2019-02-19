@@ -1,8 +1,7 @@
 from ctfdist.paths import *
 from ctfdist.descent import *
-from sklearn.linear_model import LogisticRegression
 from ctfdist.helper_functions import *
-from scripts.experimental_setup import *
+from sklearn.linear_model import LogisticRegression
 from scripts.toy_helper import *
 from scripts.plot_helper import *
 
@@ -68,8 +67,8 @@ predict_ytrue_maj = lambda x: get_py_maj(x).flatten()
 X, Y, S = df_to_XYS(df_train, minority_group = minority_group)
 f_hat = LogisticRegression(penalty = 'l2',  C = 100, fit_intercept = False)
 f_hat.fit(X = X, y = Y)
-class_idx_yhat = np.flatnonzero(f_hat.classes_ > 0)
-predict_prob = lambda x: f_hat.predict_proba(x)[:, class_idx_yhat].flatten()
+pos_class_idx = np.flatnonzero(f_hat.classes_ > 0)
+predict_prob = lambda x: f_hat.predict_proba(x)[:, pos_class_idx].flatten()
 predict_yhat = lambda x: 2.0 * np.greater(predict_prob(x), 0.5) - 1.0
 
 
@@ -88,10 +87,11 @@ script_metric_weights = {
 data_name = 'toy'
 metric_name = 'fpr'
 metric_weights = script_metric_weights[metric_name]
-figure_name = '%s_descent_%s.pdf' % (data_name, metric_name)
+figure_name = '%s%s_descent_%s.pdf' % (results_dir, data_name, metric_name)
 
 ### SANITY CHECK PERFORMANCE
 np.mean(S == np.greater(predict_group(X), 0.5))
+
 
 train_stats_df = get_performance_metrics(df = df_train,
                                          data_type = 'train',
@@ -106,49 +106,45 @@ audit_stats_df = get_performance_metrics(df = df_audit,
 
 test_stats_df = get_performance_metrics(df = df_test,
                                         data_type = 'test',
-                                        #pp = pp,
                                         predict_yhat = predict_yhat,
                                         predict_prob = predict_prob)
 
 train_stats_df[train_stats_df['s'] >= 0][['s', metric_name]]
-audit_stats_df[audit_stats_df['s'] >= 0][['s', metric_name]]
-test_stats_df[test_stats_df['s'] >= 0][['s', metric_name]]
 
 
-dcf = InfluenceFunction(df_audit,
-                        predict_yhat = predict_yhat,
-                        predict_group = predict_group,
-                        predict_ytrue = predict_ytrue,
-                        predict_ytrue_maj = predict_ytrue_maj,
-                        outcome_column_name = outcome_column_name,
-                        group_column_name = group_column_name,
-                        minority_group = minority_group,
-                        random_state = random_state)
-
-# split test into min and maj
-df_audit_min, df_audit_maj = split_by_group(df_audit)
 
 # Fit Counterfactual Distribution
-ctf_dist = CounterfactualDistribution(dcf, metric_weights = metric_weights)
+ctf_args = {
+    'df': df_audit,
+    'metric_weights': metric_weights,
+    #
+    'predict_yhat': predict_yhat,
+    'predict_group':predict_group,
+    'predict_ytrue': predict_ytrue,
+    'predict_ytrue_maj': predict_ytrue_maj,
+    #
+    'outcome_column_name': outcome_column_name,
+    'group_column_name':group_column_name,
+    'minority_group':minority_group,
+    #
+    'random_state':random_state,
+    }
 
-results = ctf_dist.fit(df_min_test = df_audit_min, df_maj_test = df_audit_maj, max_iterations = 1e3, step_size = 0.1)
+ctf_dist = CounterfactualDistribution(**ctf_args)
+df_audit_min, df_audit_maj = split_by_group(df_audit)
+results = ctf_dist.fit(df_min_test = df_audit_min, df_maj_test = df_audit_maj, max_iterations = 1e2, step_size = 0.1)
 f, _ = plot_descent_profile(results)
 f.savefig(figure_name)
 
-
 # Build Preprocessor
 pp = ctf_dist.build_preprocessor(df_audit)
-
 stats_df = get_performance_metrics(df = df_test,
                                    data_type = 'test',
                                    pp = pp,
                                    predict_yhat = predict_yhat,
-                                   predict_prob = predict_prob)
+                                   predict_prob = predict_prob,
+                                   minority_group = minority_group)
 
 stats_df[stats_df['s'] >= 0][['s', metric_name, 'dist_type']]
-
-
-
-
 
 

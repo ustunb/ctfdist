@@ -13,8 +13,8 @@ audit_size = 0.60
 
 script_metric_weights = {
     'fpr': {'fpr': 1.0},
-    #'fnr': {'fnr': 1.0},
-    # 'fdr': {'fdr': 1.0},
+    'fnr': {'fnr': 1.0},
+    #'fdr': {'fdr': 1.0},
     'da_out': {'da_out': 1.0},
     #'da_mix': {'da_out': 0.9, 'da_in': 0.1},
     # 'da_in': {'da_in': 1.0},
@@ -100,8 +100,7 @@ cv_stats_df.to_csv(results_files['model_performance_table'])
 ##### RUN REPAIR EXPERIMENTS #####
 
 # determine minority for each metric
-gap_df = all_stats_df[
-    (all_stats_df['data_type'] == 'test') & (all_stats_df['s'] >= 0) & (all_stats_df['dist_type'] == 'obs')]
+gap_df = all_stats_df[(all_stats_df['data_type'] == 'test') & (all_stats_df['s'] >= 0) & (all_stats_df['dist_type'] == 'obs')]
 gap_df = gap_df.sort_values(by = ['s'], ascending = [False])
 
 all_results = {}
@@ -266,8 +265,7 @@ pp_table.to_pickle(results_files['repair_performance_stats'])
 
 # save counterfactual distribution in table
 all_ctf_dists = [v['dist_table_df'] for k, v in all_results.items()]
-ctf_dist_metrics = ['da_out', 'fpr', 'fnr']
-ctf_dist_metrics = [m for m in ctf_dist_metrics if m in script_metric_weights]
+ctf_dist_metrics = list(script_metric_weights.keys())
 
 obs_dist_table = all_results[ctf_dist_metrics[1]]['dist_table_df'].iloc[:, 0:2]
 ctf_dist_table = pd.concat([all_results[m]['dist_table_df'].iloc[:, 2] for m in ctf_dist_metrics], axis = 1)

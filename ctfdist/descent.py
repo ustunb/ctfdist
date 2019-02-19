@@ -1091,8 +1091,9 @@ class CounterfactualDistribution:
             gf = InfluenceFunction(**kwargs)
         else:
             assert isinstance(kwargs['gf'], InfluenceFunction)
-        assert not gf.fitted
+            gf = kwargs.get('gf')
 
+        assert not gf.fitted
         self.gf = gf
         self.random_state = kwargs.get('random_state', gf.random_state)
 
