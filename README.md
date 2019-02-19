@@ -1,22 +1,21 @@
 # ctfdist
 
-`ctfdist` is a package to repair classification models with performance disparities between demographic subgroups.
+`ctfdist` is a package to repair classification models with disparate impact.
 
-Highlights:
+**Highlights**
 
 - works with any binary classification model
-- repair does not require training a new classification model
-- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equal Opportunity)
+- does not require training a new classification model
+- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equalized Odds etc.)
 - can repair performance disparities for multiple subgroups
 
-### Paper
+**Paper**
 
-[Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions](https://arxiv.org/pdf/1901.10501.pdf) 
-by Hao Wang, Berk Ustun, and Flavio Clamon
+[Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions](https://arxiv.org/pdf/1901.10501.pdf)    
+    Hao Wang, Berk Ustun, and Flavio P. Calmon
 
  ```
-
-@ARTICLE{wang2019ctf,
+@article{wang2019ctf,
        author = {{Wang}, Hao and {Ustun}, Berk and {Calmon}, Flavio P.},
         title = "{Repairing without Retraining: Avoiding Disparate Impact with Counterfactual Distributions}",
       journal = {arXiv e-prints},
@@ -29,8 +28,7 @@ archivePrefix = {arXiv},
 }
 ```
 
-
-### Package Installation
+## Installation
 
 The minimum requirements are:
 
@@ -50,13 +48,14 @@ CPLEX is cross-platform commercial optimization tool with a Python API. It is fr
 
 If you have problems installing CPLEX, check the [CPLEX user manual](http://www-01.ibm.com/support/knowledgecenter/SSSA5P/welcome) or the [CPLEX forums](https://www.ibm.com/developerworks/community/forums/html/forum?id=11111111-0000-0000-0000-000000002059).
 
-#### Development Timeline
+## Development Timeline
 
-*** This package is in active development; code will change substantially with each commit***
+***This package is in active development. Code may change substantially with each commit***
 
-- scikit-learn API conventions
+- easy installation
 - refactoring for future development
-- integration of open-source LP solver to create preprocessor
+- open-source LP solver to create preprocessor
+- scikit-learn API compatability
      
 
 
