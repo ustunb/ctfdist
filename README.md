@@ -6,8 +6,8 @@
 
 - works with any binary classification model
 - does not require training a new classification model
-- can repair performance disparities for common fairness metrics (differences in TPR, FPR, Equalized Odds etc.)
-- can repair performance disparities for multiple subgroups
+- can repair performance disparities for different fairness metrics (e.g., diff in TPR, FPR, Equalized Odds etc.)
+- can repair performance disparities for multiple groups
 
 **Paper**
 
@@ -56,6 +56,3 @@ If you have problems installing CPLEX, check the [CPLEX user manual](http://www-
 - refactoring for future development
 - open-source LP solver to create preprocessor
 - scikit-learn API compatability
-     
-
-
