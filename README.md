@@ -1,13 +1,13 @@
 # ctfdist
 
-`ctfdist` is a package to repair classification models with disparate impact.
+`ctfdist` is a package to repair classification models that perform differently on the basis of protected attributes (e.g., gender, age group).
 
 **Highlights**
 
-- works with any binary classification model
-- does not require training a new classification model
-- can repair performance disparities for different fairness metrics (e.g., diff in TPR, FPR, Equalized Odds etc.)
-- can repair performance disparities for multiple groups
+- works with any binary classification model 
+- repairs disparities without training a new model
+- address popular fairness criteria (e.g., group-specific differences in TPR, FPR, equalized odds)
+- can be used to address disparities for more than 2 protected groups
 
 **Paper**
 
@@ -30,14 +30,14 @@ archivePrefix = {arXiv},
 
 ## Installation
 
-The minimum requirements are:
+Minimum requirements: 
 
-- Python 3.5+ 
-- CPLEX 12.6+
+- Python 3.6+
+- CPLEX 12.6+,
  
-The code may still work with older versions of Python and CPLEX, but this will not be tested or supported. 
+The code may work with older versions of Python and CPLEX, but this will not be tested or supported. 
 
-#### CPLEX 
+#### Getting CPLEX 
 
 CPLEX is cross-platform commercial optimization tool with a Python API. It is freely available to students and faculty members at accredited institutions. To get CPLEX:
 
@@ -52,7 +52,7 @@ If you have problems installing CPLEX, check the [CPLEX user manual](http://www-
 
 ***This package is in active development. Code may change substantially with each commit***
 
-- easy installation
+- simplify installation
 - refactoring for future development
 - open-source LP solver to create preprocessor
 - scikit-learn API compatability
