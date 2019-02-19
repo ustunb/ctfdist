@@ -87,7 +87,7 @@ script_metric_weights = {
 data_name = 'toy'
 metric_name = 'fpr'
 metric_weights = script_metric_weights[metric_name]
-figure_name = '%s%s_descent_%s.pdf' % (results_dir, data_name, metric_name)
+figure_name = '%s/%s_descent_%s.pdf' % (results_dir, data_name, metric_name)
 
 ### SANITY CHECK PERFORMANCE
 np.mean(S == np.greater(predict_group(X), 0.5))

@@ -53,10 +53,6 @@ def plot_descent_profile(results, max_iterations = None):
     plot_test_df.index = plot_test_df['iteration']
     plot_test_df = plot_test_df.drop(columns = ['iteration'])
 
-    #from ctfdist.debug import ipsh
-    #ipsh()
-
-
 
     plt.fill_between(x = plot_test_df.index.tolist(),
                      y1 = plot_test_df['gap.min'].tolist(),
@@ -67,7 +63,6 @@ def plot_descent_profile(results, max_iterations = None):
 
     plt.scatter(x = [best_iteration], y = [best_gap], s = [300], marker = 'o', label = 'final iteration', color = 'black', zorder = 3)
     plt.legend(frameon = True, loc = 'upper right', framealpha = 1.0)
-    plt.show()
 
     ax.set_xlabel('Iteration')
     ax.set_ylabel('Disparity Metric')
